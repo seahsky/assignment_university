@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1 class="h4 text-gray-900 mb-4">View Classes</h1>
     <asp:GridView
-        CssClass="table table-bordered"
+        CssClass="table table-bordered table-hover"
         ID="ClassGridView"
         runat="server"
         AutoGenerateColumns="False"
@@ -52,7 +52,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">
                 <ItemTemplate>
-                    <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
+                    <asp:Button CommandName="Quick Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
                     <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
                 </ItemTemplate>
                 <EditItemTemplate>

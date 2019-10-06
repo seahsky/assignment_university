@@ -56,9 +56,73 @@
                 <asp:DropDownList ID="ddlClass" runat="server" CssClass="form-control"></asp:DropDownList>
             </div>
         </div>
+        <div id="addBtns" runat="server" class="row mt-4">
+            <div class="col-2">
+                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
+                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+            </div>
+        </div>
     </div>
     <%--Edit--%>
     <div id="edit" runat="server" visible="false">
+        <h1 class="h4 text-gray-900 mb-4 mt-5">Class Informations</h1>
+
+        <div class="row mt-4">
+            <div class="col-4">
+                <asp:Label ID="lblClassName" runat="server" Text="Class Name"></asp:Label>
+                <asp:TextBox ID="txtClassName" runat="server" CssClass="form-control" placeholder="Class Name" disabled="true"></asp:TextBox>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <asp:Label ID="lblClassDescription" runat="server" Text="Class Description"></asp:Label>
+                <asp:TextBox ID="txtClassDescription" runat="server" CssClass="form-control" placeholder="Class Description" disabled="true"></asp:TextBox>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-2">
+                <asp:Label ID="lblLecturerInCharge" runat="server" Text="Lecturer in Charge"></asp:Label>
+                <asp:TextBox ID="txtLecturerInCharge" runat="server" CssClass="form-control" placeholder="Lecturer in Charge" disabled="true"></asp:TextBox>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-2">
+                <asp:Label ID="lblClassBatch" runat="server" Text="Batch"></asp:Label>
+                <asp:TextBox ID="txtClassBatch" runat="server" CssClass="form-control" placeholder="Batch" disabled="true"></asp:TextBox>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <asp:Label ID="lblClassSubject" runat="server" Text="Subjects Included:"></asp:Label>
+                <asp:GridView
+                    CssClass="table table-bordered"
+                    ID="ClassSubjectGridView"
+                    runat="server"
+                    AutoGenerateColumns="False"
+                    DataKeyNames="SubjectID"
+                    OnRowDataBound="ClassSubjectGridView_RowDataBound"
+                    OnRowEditing="ClassSubjectGridView_RowEditing"
+                    OnRowUpdating="ClassSubjectGridView_RowUpdating"
+                    OnRowDeleting="ClassSubjectGridView_RowDeleting"
+                    OnRowCancelingEdit="ClassSubjectGridView_RowCancelingEdit"
+                    OnRowCommand="ClassSubjectGridView_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="SubjectID" HeaderText="SubjectID" InsertVisible="False" ReadOnly="True" SortExpression="SubjectID" />
+                        <asp:TemplateField HeaderText="Subject Name">
+                            <ItemTemplate>
+                                <asp:Label ID="lblSubjectName" runat="server" Text='<%#Eval("SubjectName") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Subject Description">
+                            <ItemTemplate>
+                                <asp:Label ID="lblSubjectDescription" runat="server" Text='<%#Eval("SubjectDescription") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+
         <h1 class="h4 text-gray-900 mb-4 mt-5">Exam  Results</h1>
 
         <asp:GridView
@@ -107,24 +171,13 @@
                         <asp:TextBox ID="txtGrade" runat="server" CssClass="form-control" Text='<%#Eval("Grade") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <%--                <asp:TemplateField HeaderText="Actions">
-                    <ItemTemplate>
-                        <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Quick Edit" />
-                        <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
-                    </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:Button CommandName="Update" runat="server" CssClass="btn btn-secondary" Text="Update" />
-                        <asp:Button CommandName="Cancel" runat="server" CssClass="btn btn-warning" Text="Cancel" CausesValidation="false" />
-                    </EditItemTemplate>
-                </asp:TemplateField>--%>
             </Columns>
         </asp:GridView>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-2">
-            <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
-            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+        <div class="row mt-4">
+            <div class="col-2">
+                <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-danger mr-2" Text="Cancel" OnClick="btnCancel_Click" CausesValidation="false" />
+                <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-info" Text="Update" OnClick="btnUpdate_Click" />
+            </div>
         </div>
     </div>
 </asp:Content>

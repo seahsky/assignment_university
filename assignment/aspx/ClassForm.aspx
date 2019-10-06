@@ -22,28 +22,34 @@
         </div>
     </div>
 
-    <div class="row">
-        <asp:TextBox ID="txtName" runat="server" CssClass="form-control col-6 mt-4" placeholder="Class Name"></asp:TextBox>
-    </div>
-    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Class Name is Required." ControlToValidate="txtName"></asp:RequiredFieldValidator>
-    <div class="row">
-        <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control col-8 mt-4" placeholder="Class Description"></asp:TextBox>
-    </div>
-    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Class Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
-    <div class="row">
-        <asp:Label ID="lblBatch" runat="server" Text="Batch" CssClass="mt-4"></asp:Label>
-    </div>
-    <div class="row">
-        <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control col-5"></asp:DropDownList>
-    </div>
-    <div class="row">
-        <asp:Label ID="lblLecturer" runat="server" Text="Lecturer in Charge" CssClass="mt-4"></asp:Label>
-    </div>
-    <div class="row">
-        <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control col-5"></asp:DropDownList>
-    </div>
-    <div class="row mt-4">
-        <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
-        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+    <div id="add">
+        <div class="row mt-4">
+            <div class="col-6">
+                <asp:TextBox ID="txtName" runat="server" CssClass="form-control" placeholder="Class Name"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Class Name is Required." ControlToValidate="txtName"></asp:RequiredFieldValidator>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" placeholder="Class Description"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Class Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
+            </div>
+        </div>
+        <div class="row">
+            <asp:Label ID="lblBatch" runat="server" Text="Batch" CssClass="mt-4"></asp:Label>
+        </div>
+        <div class="row">
+            <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+        </div>
+        <div class="row">
+            <asp:Label ID="lblLecturer" runat="server" Text="Lecturer in Charge" CssClass="mt-4"></asp:Label>
+        </div>
+        <div class="row">
+            <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+        </div>
+        <div class="row mt-4">
+            <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
+            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+        </div>
     </div>
 </asp:Content>
