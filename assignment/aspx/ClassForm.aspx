@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/aspx/Site.Master" AutoEventWireup="true" CodeBehind="ClassForm.aspx.cs" Inherits="assignment.aspx.ClassForm" %>
 
+<script runat="server">
+
+    protected void btnAddSubject_Click(object sender, EventArgs e)
+    {
+
+    }
+</script>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1 id="h1Title" runat="server" class="h4 text-gray-900 mb-4">Add a Class</h1>
 
@@ -111,7 +120,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <asp:Button ID="btnAddSubject" runat="server" CssClass="btn btn-primary" Text="Add" OnClick="" />
                             </div>
                         </div>
                     </div>
