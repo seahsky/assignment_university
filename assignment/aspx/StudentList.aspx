@@ -53,6 +53,14 @@
                     <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control" />
                 </EditItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField HeaderText="Class">
+                <ItemTemplate>
+                    <asp:Label ID="lblClass" runat="server" Text='<%#Eval("Class") %>'></asp:Label>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddlClass" runat="server" CssClass="form-control" />
+                </EditItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Status">
                 <ItemTemplate>
                     <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("Status") %>'></asp:Label>
@@ -63,8 +71,9 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">
                 <ItemTemplate>
-                    <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Quick Edit" />
-                    <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
+                    <asp:Button ID="btnView" runat="server" CssClass="btn btn-info" Text="View Details" PostBackUrl='<%# "~/aspx/StudentForm.aspx?action=view&StudentID=" + Eval("StudentID") %>' />
+                    <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
+                    <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this student? All the data related to this student will be lost.')" />
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:Button CommandName="Update" runat="server" CssClass="btn btn-secondary" Text="Update" />

@@ -19,7 +19,32 @@ namespace assignment.aspx
         Boolean success = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            DdlInit();
+            if (!IsPostBack)
+            {
+                DdlInit();
+            }
+            if (Request.QueryString["action"] == "add")
+            {
+                h1Title.InnerText = "Add a Class";
+            }
+            else if (Request.QueryString["action"] == "view" && Request.QueryString["ClassID"] != null)
+            {
+                h1Title.InnerText = "View Class Details";
+                int ClassID = int.Parse(Request.QueryString["ClassID"]);
+                LoadClassSubject(ClassID);
+
+                view.Visible = true;
+                addBtns.Visible = false;
+                txtName.Enabled = false;
+                txtDescription.Enabled = false;
+                ddlBatch.Enabled = false;
+                ddlLecturer.Enabled = false;
+            }
+            else
+            {
+                Response.Redirect("");
+            }
+
             if (Request.QueryString["add"] == "success")
             {
                 success = true;
@@ -81,6 +106,24 @@ namespace assignment.aspx
             sqlda = new SqlDataAdapter(com);
             ds = new DataSet();
             sqlda.Fill(ds);
+            con.Close();
+        }
+
+        protected void LoadClassSubject(int ClassID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            com = new SqlCommand();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "ReadClassSubject";
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.Add(new SqlParameter("@ClassID", SqlDbType.Int));
+            com.Parameters["@ClassID"].Value = ClassID;
+            sqlda = new SqlDataAdapter(com);
+            ds = new DataSet();
+            sqlda.Fill(ds);
+            ClassSubjectGridView.DataSource = ds;
+            ClassSubjectGridView.DataBind();
             con.Close();
         }
 

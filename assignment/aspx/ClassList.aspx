@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/aspx/Site.Master" AutoEventWireup="true" CodeBehind="ClassList.aspx.cs" Inherits="assignment.aspx.ClassList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/aspx/Site.Master" AutoEventWireup="true" CodeBehind="ClassList.aspx.cs" Inherits="assignment.aspx.ClassList" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1 class="h4 text-gray-900 mb-4">View Classes</h1>
@@ -52,7 +52,8 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">
                 <ItemTemplate>
-                    <asp:Button CommandName="Quick Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
+                    <asp:Button ID="btnView" runat="server" CssClass="btn btn-info" Text="View Subjects" PostBackUrl='<%# "~/aspx/ClassForm.aspx?action=view&ClassID=" + Eval("ClassID") %>' />
+                    <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
                     <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
                 </ItemTemplate>
                 <EditItemTemplate>

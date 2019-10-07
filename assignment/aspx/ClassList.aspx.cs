@@ -46,11 +46,6 @@ namespace assignment.aspx
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string ClassID = DataBinder.Eval(e.Row.DataItem, "ClassID").ToString();
-                string Location = ResolveUrl("ClassForm.aspx") + "?action=edit" + "&ClassID=" + ClassID;
-                e.Row.Attributes["onclick"] = string.Format("javascript:window.location='{0}';", Location);
-                e.Row.Style["cursor"] = "pointer";
-
                 DropDownList ddlLecturer = e.Row.FindControl("ddlLecturer") as DropDownList;
                 if (ddlLecturer != null)
                 {

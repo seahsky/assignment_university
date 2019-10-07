@@ -18,8 +18,6 @@ namespace assignment.aspx
         DataSet ds;
         Boolean success = false;
 
-        int StudentID;
-        int ClassStudentID;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -30,15 +28,23 @@ namespace assignment.aspx
             {
                 h1Title.InnerText = "Add a Student";
             }
-            else if (Request.QueryString["action"] == "edit" && Request.QueryString["StudentID"] != null)
+            else if (Request.QueryString["action"] == "view" && Request.QueryString["StudentID"] != null)
             {
-                h1Title.InnerText = "Edit Student";
-                StudentID = int.Parse(Request.QueryString["StudentID"]);
-                LoadStudentData(StudentID);
-                LoadClassStudentData(StudentID);
-                LoadStudentResultData(StudentID);
-                edit.Visible = true;
+                h1Title.InnerText = "View Student Details";
+                int StudentID = int.Parse(Request.QueryString["StudentID"]);
+                int ClassID = GetStudentCurrentClass(StudentID);
+                LoadStudent(StudentID);
+                LoadClassStudent(StudentID);
+                LoadClassSubject(ClassID);
+                LoadStudentResult(StudentID);
+                view.Visible = true;
                 addBtns.Visible = false;
+                txtName.Enabled = false;
+                txtEmail.Enabled = false;
+                txtContactNo.Enabled = false;
+                ddlBatch.Enabled = false;
+                ddlStatus.Enabled = false;
+                ddlClass.Enabled = false;
             }
             else
             {
@@ -100,7 +106,7 @@ namespace assignment.aspx
             con.Close();
         }
 
-        protected void AddStudent(string Name, string Email, string ContactNo, int BatchID, int StatusID)
+        protected void AddStudent(string Name, string Email, string ContactNo, int BatchID, int StatusID, int ClassID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
@@ -114,12 +120,14 @@ namespace assignment.aspx
             com.Parameters.Add(new SqlParameter("@ContactNo", SqlDbType.VarChar, 15));
             com.Parameters.Add(new SqlParameter("@BatchID", SqlDbType.Int));
             com.Parameters.Add(new SqlParameter("@StatusID", SqlDbType.Int));
+            com.Parameters.Add(new SqlParameter("@ClassID", SqlDbType.Int));
             com.Parameters["@action"].Value = "Create";
             com.Parameters["@Name"].Value = Name;
             com.Parameters["@Email"].Value = Email;
             com.Parameters["@ContactNo"].Value = ContactNo;
             com.Parameters["@BatchID"].Value = BatchID;
             com.Parameters["@StatusID"].Value = StatusID;
+            com.Parameters["@ClassID"].Value = ClassID;
             sqlda = new SqlDataAdapter(com);
             ds = new DataSet();
             sqlda.Fill(ds);
@@ -128,7 +136,7 @@ namespace assignment.aspx
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            AddStudent(txtName.Text, txtEmail.Text, txtContactNo.Text, int.Parse(ddlBatch.SelectedValue), int.Parse(ddlStatus.SelectedValue));
+            AddStudent(txtName.Text, txtEmail.Text, txtContactNo.Text, int.Parse(ddlBatch.SelectedValue), int.Parse(ddlStatus.SelectedValue), int.Parse(ddlClass.SelectedValue));
             Response.Redirect("StudentForm.aspx?action=add");
         }
 
@@ -137,7 +145,7 @@ namespace assignment.aspx
             Response.Redirect("StudentForm.aspx?action=add");
         }
 
-        protected void LoadStudentData(int StudentID)
+        protected void LoadStudent(int StudentID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
@@ -157,28 +165,29 @@ namespace assignment.aspx
             txtContactNo.Text = ds.Tables[0].Rows[0]["ContactNo"].ToString();
             ddlBatch.SelectedValue = ds.Tables[0].Rows[0]["BatchID"].ToString();
             ddlStatus.SelectedValue = ds.Tables[0].Rows[0]["StatusID"].ToString();
+            ddlClass.SelectedValue = ds.Tables[0].Rows[0]["ClassID"].ToString();
             con.Close();
         }
 
-        protected void LoadStudentResultData(int StudentID)
+        protected void LoadClassStudent(int StudentID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
             con.Open();
             com.Connection = con;
-            com.CommandText = "ReadStudentResultInfo";
+            com.CommandText = "ReadClassStudent";
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.Add(new SqlParameter("@StudentID", SqlDbType.Int));
             com.Parameters["@StudentID"].Value = StudentID;
             sqlda = new SqlDataAdapter(com);
             ds = new DataSet();
             sqlda.Fill(ds);
-            StudentResultGridView.DataSource = ds;
-            StudentResultGridView.DataBind();
+            ClassStudentGridView.DataSource = ds;
+            ClassStudentGridView.DataBind();
             con.Close();
         }
 
-        protected void LoadClassSubjectData(int ClassID)
+        protected void LoadClassSubject(int ClassID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
@@ -196,146 +205,39 @@ namespace assignment.aspx
             con.Close();
         }
 
-        protected void LoadClassStudentData(int StudentID)
+        protected void LoadStudentResult(int StudentID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
             con.Open();
             com.Connection = con;
-            com.CommandText = "ReadClassStudent";
+            com.CommandText = "ReadStudentResult";
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.Add(new SqlParameter("@StudentID", SqlDbType.Int));
             com.Parameters["@StudentID"].Value = StudentID;
             sqlda = new SqlDataAdapter(com);
             ds = new DataSet();
             sqlda.Fill(ds);
-            ClassStudentID = int.Parse(ds.Tables[0].Rows[0]["ClassStudentID"].ToString());
-            txtClassName.Text = ds.Tables[0].Rows[0]["Name"].ToString();
-            txtClassDescription.Text = ds.Tables[0].Rows[0]["Description"].ToString();
-            txtLecturerInCharge.Text = ds.Tables[0].Rows[0]["LecturerInCharge"].ToString();
-            txtClassBatch.Text = ds.Tables[0].Rows[0]["Batch"].ToString();
-            ddlClass.SelectedValue = ds.Tables[0].Rows[0]["ClassID"].ToString();
+            StudentResultGridView.DataSource = ds;
+            StudentResultGridView.DataBind();
             con.Close();
-            int ClassID = int.Parse(ds.Tables[0].Rows[0]["ClassID"].ToString());
-            LoadClassSubjectData(ClassID);
         }
 
-        protected void UpdateClassStudentData(int ClassStudentID, int ClassID)
+        protected int GetStudentCurrentClass(int StudentID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
             con.Open();
             com.Connection = con;
-            com.CommandText = "UpdateClassStudent";
+            com.CommandText = "GetStudentCurrentClass";
             com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.Add(new SqlParameter("@ClassStudentID", SqlDbType.Int));
-            com.Parameters.Add(new SqlParameter("@ClassID", SqlDbType.Int));
-            com.Parameters["@ClassStudentID"].Value = ClassStudentID;
-            com.Parameters["@ClassID"].Value = ClassID;
-            sqlda = new SqlDataAdapter(com);
-            ds = new DataSet();
-            sqlda.Fill(ds);
-            con.Close();
-        }
-
-        protected void UpdateStudent(int StudentID, string Name, string Email, string ContactNo, int BatchID, int StatusID)
-        {
-            SqlConnection con = new SqlConnection(connectionString);
-            com = new SqlCommand();
-            con.Open();
-            com.Connection = con;
-            com.CommandText = "StudentCRUD";
-            com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.Add(new SqlParameter("@action", SqlDbType.VarChar, 50));
             com.Parameters.Add(new SqlParameter("@StudentID", SqlDbType.Int));
-            com.Parameters.Add(new SqlParameter("@Name", SqlDbType.VarChar, 100));
-            com.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 100));
-            com.Parameters.Add(new SqlParameter("@ContactNo", SqlDbType.VarChar, 15));
-            com.Parameters.Add(new SqlParameter("@BatchID", SqlDbType.Int));
-            com.Parameters.Add(new SqlParameter("@StatusID", SqlDbType.Int));
-            com.Parameters["@action"].Value = "Update";
             com.Parameters["@StudentID"].Value = StudentID;
-            com.Parameters["@Name"].Value = Name;
-            com.Parameters["@Email"].Value = Email;
-            com.Parameters["@ContactNo"].Value = ContactNo;
-            com.Parameters["@BatchID"].Value = BatchID;
-            com.Parameters["@StatusID"].Value = StatusID;
             sqlda = new SqlDataAdapter(com);
             ds = new DataSet();
             sqlda.Fill(ds);
             con.Close();
-        }
-
-        protected void StudentResultGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-        }
-
-        protected void StudentResultGridView_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-
-        }
-
-        protected void StudentResultGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-        }
-
-        protected void StudentResultGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-
-        }
-
-        protected void StudentResultGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-
-        }
-
-        protected void StudentResultGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-
-        }
-
-        protected void ClassSubjectGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("StudentList.aspx");
-        }
-
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
-            UpdateStudent(StudentID, txtName.Text, txtEmail.Text, txtContactNo.Text, int.Parse(ddlBatch.SelectedValue), int.Parse(ddlStatus.SelectedValue));
-            UpdateClassStudentData(ClassStudentID, int.Parse(ddlClass.SelectedValue));
-            Response.Redirect(Request.Url.ToString());
+            return int.Parse(ds.Tables[0].Rows[0]["ClassID"].ToString());
         }
     }
 }

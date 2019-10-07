@@ -33,6 +33,15 @@ namespace assignment.aspx
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl cardSuccess;
 
         /// <summary>
+        /// lblName 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblName;
+
+        /// <summary>
         /// txtName 控件。
         /// </summary>
         /// <remarks>
@@ -42,6 +51,15 @@ namespace assignment.aspx
         protected global::System.Web.UI.WebControls.TextBox txtName;
 
         /// <summary>
+        /// lblEmail 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmail;
+
+        /// <summary>
         /// txtEmail 控件。
         /// </summary>
         /// <remarks>
@@ -49,6 +67,15 @@ namespace assignment.aspx
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
+
+        /// <summary>
+        /// lblContactNo 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblContactNo;
 
         /// <summary>
         /// txtContactNo 控件。
@@ -141,85 +168,22 @@ namespace assignment.aspx
         protected global::System.Web.UI.WebControls.Button btnSubmit;
 
         /// <summary>
-        /// edit 控件。
+        /// view 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl edit;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl view;
 
         /// <summary>
-        /// lblClassName 控件。
+        /// ClassStudentGridView 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClassName;
-
-        /// <summary>
-        /// txtClassName 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClassName;
-
-        /// <summary>
-        /// lblClassDescription 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClassDescription;
-
-        /// <summary>
-        /// txtClassDescription 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClassDescription;
-
-        /// <summary>
-        /// lblLecturerInCharge 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLecturerInCharge;
-
-        /// <summary>
-        /// txtLecturerInCharge 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLecturerInCharge;
-
-        /// <summary>
-        /// lblClassBatch 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblClassBatch;
-
-        /// <summary>
-        /// txtClassBatch 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClassBatch;
+        protected global::System.Web.UI.WebControls.GridView ClassStudentGridView;
 
         /// <summary>
         /// lblClassSubject 控件。
@@ -240,6 +204,15 @@ namespace assignment.aspx
         protected global::System.Web.UI.WebControls.GridView ClassSubjectGridView;
 
         /// <summary>
+        /// h1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h1;
+
+        /// <summary>
         /// StudentResultGridView 控件。
         /// </summary>
         /// <remarks>
@@ -247,23 +220,5 @@ namespace assignment.aspx
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView StudentResultGridView;
-
-        /// <summary>
-        /// btnCancel 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
-
-        /// <summary>
-        /// btnUpdate 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpdate;
     }
 }
