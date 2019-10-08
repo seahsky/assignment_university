@@ -46,6 +46,8 @@ namespace assignment.aspx
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                DataRowView drvClass = e.Row.DataItem as DataRowView;
+
                 DropDownList ddlLecturer = e.Row.FindControl("ddlLecturer") as DropDownList;
                 if (ddlLecturer != null)
                 {
@@ -53,7 +55,7 @@ namespace assignment.aspx
                     com = new SqlCommand();
                     con.Open();
                     com.Connection = con;
-                    com.CommandText = "ddlLecturer";
+                    com.CommandText = "DDLLecturer";
                     com.CommandType = CommandType.StoredProcedure;
                     sqlda = new SqlDataAdapter(com);
                     ds = new DataSet();
@@ -63,6 +65,7 @@ namespace assignment.aspx
                     ddlLecturer.DataValueField = "LecturerID";
                     ddlLecturer.DataBind();
                     con.Close();
+                    ddlLecturer.SelectedValue = drvClass["LecturerID"].ToString();
                 }
                 DropDownList ddlBatch = e.Row.FindControl("ddlBatch") as DropDownList;
                 if (ddlBatch != null)
@@ -81,6 +84,7 @@ namespace assignment.aspx
                     ddlBatch.DataValueField = "BatchID";
                     ddlBatch.DataBind();
                     con.Close();
+                    ddlBatch.SelectedValue = drvClass["BatchID"].ToString();
                 }
             }
         }

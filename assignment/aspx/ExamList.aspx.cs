@@ -46,6 +46,8 @@ namespace assignment.aspx
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                DataRowView drvExam = e.Row.DataItem as DataRowView;
+
                 DropDownList ddlSubject = e.Row.FindControl("ddlSubject") as DropDownList;
                 if (ddlSubject != null)
                 {
@@ -63,6 +65,7 @@ namespace assignment.aspx
                     ddlSubject.DataValueField = "SubjectID";
                     ddlSubject.DataBind();
                     con.Close();
+                    ddlSubject.SelectedValue = drvExam["SubjectID"].ToString();
                 }
                 DropDownList ddlBatch = e.Row.FindControl("ddlBatch") as DropDownList;
                 if (ddlBatch != null)
@@ -81,6 +84,7 @@ namespace assignment.aspx
                     ddlBatch.DataValueField = "BatchID";
                     ddlBatch.DataBind();
                     con.Close();
+                    ddlBatch.SelectedValue = drvExam["BatchID"].ToString();
                 }
             }
         }
@@ -97,7 +101,7 @@ namespace assignment.aspx
             TextBox txtDescription = ExamGridView.Rows[e.RowIndex].FindControl("txtDescription") as TextBox;
             DropDownList ddlSubject = ExamGridView.Rows[e.RowIndex].FindControl("ddlSubject") as DropDownList;
             DropDownList ddlBatch = ExamGridView.Rows[e.RowIndex].FindControl("ddlBatch") as DropDownList;
-            UpdateExam(ExamID, txtDescription.Text, int.Parse(ddlBatch.SelectedValue), int.Parse(ddlSubject.SelectedValue));
+            UpdateExam(ExamID, txtDescription.Text, int.Parse(ddlSubject.SelectedValue), int.Parse(ddlBatch.SelectedValue));
             ExamGridView.EditIndex = -1;
             LoadData();
         }

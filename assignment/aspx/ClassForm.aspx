@@ -1,12 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/aspx/Site.Master" AutoEventWireup="true" CodeBehind="ClassForm.aspx.cs" Inherits="assignment.aspx.ClassForm" %>
-
-<script runat="server">
-
-    protected void btnAddSubject_Click(object sender, EventArgs e)
-    {
-
-    }
-</script>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/aspx/Site.Master" AutoEventWireup="true" CodeBehind="ClassForm.aspx.cs" Inherits="assignment.aspx.ClassForm" EnableEventValidation="false" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -44,21 +36,23 @@
                 <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Class Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
             </div>
         </div>
-        <div class="row">
-            <asp:Label ID="lblBatch" runat="server" Text="Batch" CssClass="mt-4"></asp:Label>
+        <div class="row mt-4">
+            <div class="col-5">
+                <asp:Label ID="lblBatch" runat="server" Text="Batch" CssClass="mt-4"></asp:Label>
+                <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+            </div>
         </div>
-        <div class="row">
-            <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control col-5"></asp:DropDownList>
-        </div>
-        <div class="row">
-            <asp:Label ID="lblLecturer" runat="server" Text="Lecturer in Charge" CssClass="mt-4"></asp:Label>
-        </div>
-        <div class="row">
-            <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+        <div class="row mt-4">
+            <div class="col-5">
+                <asp:Label ID="lblLecturer" runat="server" Text="Lecturer in Charge" CssClass="mt-4"></asp:Label>
+                <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+            </div>
         </div>
         <div id="addBtns" runat="server" class="row mt-4">
-            <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
-            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+            <div class="col-4">
+                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
+                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+            </div>
         </div>
     </div>
     <%--View--%>
@@ -71,8 +65,15 @@
                     ID="ClassSubjectGridView"
                     runat="server"
                     AutoGenerateColumns="False"
-                    DataKeyNames="SubjectID">
+                    DataKeyNames="SubjectID"
+                    OnRowCommand="ClassSubjectGridView_RowCommand"
+                    OnRowDataBound="ClassSubjectGridView_RowDataBound"
+                    OnRowDeleting="ClassSubjectGridView_RowDeleting"
+                    OnRowCancelingEdit="ClassSubjectGridView_RowCancelingEdit"
+                    OnRowUpdating="ClassSubjectGridView_RowUpdating"
+                    OnRowEditing="ClassSubjectGridView_RowEditing">
                     <Columns>
+                        <asp:BoundField DataField="ClassSubjectID" HeaderText="ClassSubjectID" InsertVisible="False" ReadOnly="True" SortExpression="ClassSubjectID" Visible="true" />
                         <asp:BoundField DataField="SubjectID" HeaderText="SubjectID" InsertVisible="False" ReadOnly="True" SortExpression="SubjectID" />
                         <asp:TemplateField HeaderText="Subject Name">
                             <ItemTemplate>
@@ -101,8 +102,9 @@
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
+                <p id="noSubject" runat="server">This class doesn't have any subject!</p>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddSubject">
-                    Launch demo modal
+                    Add Subject
                 </button>
 
                 <%--Modal--%>
@@ -120,7 +122,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <asp:Button ID="btnAddSubject" runat="server" CssClass="btn btn-primary" Text="Add" OnClick="" />
+                                <asp:Button ID="addSubjectBtn" runat="server" CssClass="btn btn-primary" Text="Add" OnClick="addSubjectBtn_Click" CausesValidation="false" />
                             </div>
                         </div>
                     </div>

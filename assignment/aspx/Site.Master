@@ -77,7 +77,7 @@
                     <div id="classMenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <asp:HyperLink CssClass="collapse-item" NavigateUrl="ClassList.aspx" Text="View Classes" runat="server" />
-                            <asp:HyperLink CssClass="collapse-item" NavigateUrl="ClassForm.aspx" Text="Add a Class" runat="server" />
+                            <asp:HyperLink CssClass="collapse-item" NavigateUrl="ClassForm.aspx?action=add" Text="Add a Class" runat="server" />
                         </div>
                     </div>
                 </li>
