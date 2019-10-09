@@ -106,6 +106,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddSubject">
                     Add Subject
                 </button>
+                <asp:Button ID="manageExamBtn" runat="server" CssClass="btn btn-info" Text="Manage Class Exams" OnClick="manageExamBtn_Click" />
 
                 <%--Modal--%>
                 <div class="modal fade" id="modalAddSubject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -318,5 +318,11 @@ namespace assignment.aspx
         {
 
         }
+
+        protected void manageExamBtn_Click(object sender, EventArgs e)
+        {
+            string ClassID = Request.QueryString["ClassID"];
+            Response.Redirect("ExamSubjectList.aspx?ClassID=" + ClassID);
+        }
     }
 }

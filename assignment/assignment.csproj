@@ -71,6 +71,8 @@
     <Content Include="aspx\ClassList.aspx" />
     <Content Include="aspx\ExamForm.aspx" />
     <Content Include="aspx\ExamList.aspx" />
+    <Content Include="aspx\ExamSelectList.aspx" />
+    <Content Include="aspx\ExamSubjectList.aspx" />
     <Content Include="aspx\LecturerForm.aspx" />
     <Content Include="aspx\LecturerList.aspx" />
     <Content Include="aspx\StudentForm.aspx" />
@@ -1725,6 +1727,20 @@
     </Compile>
     <Compile Include="aspx\ExamList.aspx.designer.cs">
       <DependentUpon>ExamList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\ExamSelectList.aspx.cs">
+      <DependentUpon>ExamSelectList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\ExamSelectList.aspx.designer.cs">
+      <DependentUpon>ExamSelectList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx\ExamSubjectList.aspx.cs">
+      <DependentUpon>ExamSubjectList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx\ExamSubjectList.aspx.designer.cs">
+      <DependentUpon>ExamSubjectList.aspx</DependentUpon>
     </Compile>
     <Compile Include="aspx\LecturerForm.aspx.cs">
       <DependentUpon>LecturerForm.aspx</DependentUpon>
