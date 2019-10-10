@@ -65,20 +65,106 @@ namespace assignment.aspx
             }
         }
 
+        protected int LoadOneClassSubject(int ClassSubjectID, string option)
+        {
+            int[] cs = new int[2];
+            SqlConnection con = new SqlConnection(connectionString);
+            com = new SqlCommand();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "ReadOneClassSubject";
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.Add(new SqlParameter("@ClassSubjectID", SqlDbType.Int));
+            com.Parameters["@ClassSubjectID"].Value = ClassSubjectID;
+            sqlda = new SqlDataAdapter(com);
+            ds = new DataSet();
+            sqlda.Fill(ds);
+            con.Close();
+            cs[0] = int.Parse(ds.Tables[0].Rows[0]["ClassID"].ToString());
+            cs[1] = int.Parse(ds.Tables[0].Rows[0]["SubjectID"].ToString());
+            if (option == "ClassID")
+            {
+                return cs[0];
+            }
+            else if (option == "SubjectID")
+            {
+                return cs[1];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        protected void UpdateExamSubject(int ClassSubjectID, int ExamID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            com = new SqlCommand();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "UpdateClassSubject";
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.Add(new SqlParameter("@ClassSubjectID", SqlDbType.Int));
+            com.Parameters.Add(new SqlParameter("@ExamID", SqlDbType.Int));
+            com.Parameters["@ClassSubjectID"].Value = ClassSubjectID;
+            com.Parameters["@ExamID"].Value = ExamID;
+            com.ExecuteNonQuery();
+            con.Close();
+        }
+
         protected void ExamSubjectGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
         }
 
         protected void ExamSubjectGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string ClassSubjectID = DataBinder.Eval(e.Row.DataItem, "ClassSubjectID").ToString();
-                string Location = ResolveUrl("ExamSelectList.aspx") + "?ClassSubjectID=" + ClassSubjectID;
-                e.Row.Attributes["onclick"] = string.Format("javascript:window.location='{0}';", Location);
-                e.Row.Style["cursor"] = "pointer";
+                DataRowView drvExamSubject = e.Row.DataItem as DataRowView;
+
+                DropDownList ddlDateTime = e.Row.FindControl("ddlDateTime") as DropDownList;
+                if (ddlDateTime != null)
+                {
+                    SqlConnection con = new SqlConnection(connectionString);
+                    com = new SqlCommand();
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = "DDLExamSubject";
+                    com.CommandType = CommandType.StoredProcedure;
+                    com.Parameters.Add(new SqlParameter("@SubjectID", SqlDbType.Int));
+                    com.Parameters["@SubjectID"].Value = int.Parse(drvExamSubject["ClassSubjectID"].ToString());
+                    sqlda = new SqlDataAdapter(com);
+                    ds = new DataSet();
+                    sqlda.Fill(ds);
+                    ddlDateTime.DataSource = ds;
+                    ddlDateTime.DataTextField = "DateTime";
+                    ddlDateTime.DataValueField = "ExamID";
+                    ddlDateTime.DataBind();
+                    con.Close();
+                    ddlDateTime.SelectedValue = drvExamSubject["ExamID"].ToString();
+                }
             }
+        }
+
+        protected void ExamSubjectGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            int ClassID = int.Parse(Request.QueryString["ClassID"]);
+            ExamSubjectGridView.EditIndex = -1;
+            hasSubject = LoadClassSubject(ClassID);
+        }
+
+        protected void ExamSubjectGridView_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            int ClassID = int.Parse(Request.QueryString["ClassID"]);
+            ExamSubjectGridView.EditIndex = e.NewEditIndex;
+            hasSubject = LoadClassSubject(ClassID);
+        }
+
+        protected void ExamSubjectGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            int ClassSubjectID = int.Parse(ExamSubjectGridView.Rows[e.RowIndex].Cells[0].Text);
+            DropDownList ddlDateTime = ExamSubjectGridView.Rows[e.RowIndex].FindControl("ddlDateTime") as DropDownList;
+            UpdateExamSubject(ClassSubjectID, int.Parse(ddlDateTime.SelectedValue));
         }
     }
 }

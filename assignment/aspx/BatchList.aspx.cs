@@ -47,11 +47,6 @@ namespace assignment.aspx
 
         }
 
-        protected void BatchGridView_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            BatchGridView.EditIndex = e.NewEditIndex;
-            LoadData();
-        }
 
         protected void BatchGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -119,9 +114,10 @@ namespace assignment.aspx
 
         }
 
-        protected void BatchGridView_RowEditing1(object sender, GridViewEditEventArgs e)
+        protected void BatchGridView_RowEditing(object sender, GridViewEditEventArgs e)
         {
-
+            BatchGridView.EditIndex = e.NewEditIndex;
+            LoadData();
         }
     }
 }

@@ -33,12 +33,20 @@
                     <asp:DropDownList ID="ddlSubject" runat="server" CssClass="form-control" />
                 </EditItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Batch">
+            <asp:TemplateField HeaderText="Date">
                 <ItemTemplate>
-                    <asp:Label ID="lblBatch" runat="server" Text='<%#Eval("Batch") %>'></asp:Label>
+                    <asp:Label ID="lblDate" runat="server" Text='<%#Convert.ToDateTime(Eval("Date")).ToString("MM/dd/yyyy") %>'></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control" />
+                    <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" Text='<%#Convert.ToDateTime(Eval("Date")).ToString("MM/dd/yyyy") %>'></asp:TextBox>
+                </EditItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Time">
+                <ItemTemplate>
+                    <asp:Label ID="lblTime" runat="server" Text='<%#Eval("Time", "{0:t}") %>'></asp:Label>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:TextBox ID="txtTime" runat="server" CssClass="form-control" Text='<%#Eval("Time", "{0:T}") %>'></asp:TextBox>
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">
@@ -53,4 +61,19 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    <script>
+        $(function () {
+            $("[id*=txtDate]").datepicker();
+            $("[id*=txtTime]").timepicker({
+                timeFormat: 'HH:mm:ss',
+                interval: 60,
+                minTime: '10',
+                maxTime: '6:00pm',
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+        });
+    </script>
 </asp:Content>

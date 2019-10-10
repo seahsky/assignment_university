@@ -19,7 +19,10 @@ namespace assignment.aspx
         Boolean success = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            DdlInit();
+            if (!IsPostBack)
+            {
+                DdlInit();
+            }
             if (Request.QueryString["add"] == "success")
             {
                 success = true;
@@ -44,23 +47,9 @@ namespace assignment.aspx
             ddlSubject.DataValueField = "SubjectID";
             ddlSubject.DataBind();
             con.Close();
-
-            com = new SqlCommand();
-            con.Open();
-            com.Connection = con;
-            com.CommandText = "DDLBatch";
-            com.CommandType = CommandType.StoredProcedure;
-            sqlda = new SqlDataAdapter(com);
-            ds = new DataSet();
-            sqlda.Fill(ds);
-            ddlBatch.DataSource = ds;
-            ddlBatch.DataTextField = "Batch";
-            ddlBatch.DataValueField = "BatchID";
-            ddlBatch.DataBind();
-            con.Close();
         }
 
-        protected void AddExam(string Description, int SubjectID, int BatchID)
+        protected void AddExam(string Description, int SubjectID, DateTime Date, DateTime Time)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
@@ -71,14 +60,14 @@ namespace assignment.aspx
             com.Parameters.Add(new SqlParameter("@action", SqlDbType.VarChar, 50));
             com.Parameters.Add(new SqlParameter("@Description", SqlDbType.VarChar, 100));
             com.Parameters.Add(new SqlParameter("@SubjectID", SqlDbType.Int));
-            com.Parameters.Add(new SqlParameter("@BatchID", SqlDbType.Int));
+            com.Parameters.Add(new SqlParameter("@Date", SqlDbType.DateTime));
+            com.Parameters.Add(new SqlParameter("@Time", SqlDbType.DateTime));
             com.Parameters["@action"].Value = "Create";
             com.Parameters["@Description"].Value = Description;
             com.Parameters["@SubjectID"].Value = SubjectID;
-            com.Parameters["@BatchID"].Value = BatchID;
-            sqlda = new SqlDataAdapter(com);
-            ds = new DataSet();
-            sqlda.Fill(ds);
+            com.Parameters["@Date"].Value = Date;
+            com.Parameters["@Time"].Value = Time;
+            com.ExecuteNonQuery();
             con.Close();
         }
 
@@ -89,7 +78,7 @@ namespace assignment.aspx
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            AddExam(txtDescription.Text, int.Parse(ddlSubject.SelectedValue), int.Parse(ddlBatch.SelectedValue));
+            AddExam(txtDescription.Text, int.Parse(ddlSubject.SelectedValue), Convert.ToDateTime(txtDate.Text), Convert.ToDateTime(txtTime.Text));
             Response.Redirect("ExamForm.aspx?add=success");
         }
     }

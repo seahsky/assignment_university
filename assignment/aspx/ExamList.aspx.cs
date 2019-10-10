@@ -67,25 +67,6 @@ namespace assignment.aspx
                     con.Close();
                     ddlSubject.SelectedValue = drvExam["SubjectID"].ToString();
                 }
-                DropDownList ddlBatch = e.Row.FindControl("ddlBatch") as DropDownList;
-                if (ddlBatch != null)
-                {
-                    SqlConnection con = new SqlConnection(connectionString);
-                    com = new SqlCommand();
-                    con.Open();
-                    com.Connection = con;
-                    com.CommandText = "DDLBatch";
-                    com.CommandType = CommandType.StoredProcedure;
-                    sqlda = new SqlDataAdapter(com);
-                    ds = new DataSet();
-                    sqlda.Fill(ds);
-                    ddlBatch.DataSource = ds;
-                    ddlBatch.DataTextField = "Batch";
-                    ddlBatch.DataValueField = "BatchID";
-                    ddlBatch.DataBind();
-                    con.Close();
-                    ddlBatch.SelectedValue = drvExam["BatchID"].ToString();
-                }
             }
         }
 
@@ -100,13 +81,14 @@ namespace assignment.aspx
             int ExamID = int.Parse(ExamGridView.Rows[e.RowIndex].Cells[0].Text);
             TextBox txtDescription = ExamGridView.Rows[e.RowIndex].FindControl("txtDescription") as TextBox;
             DropDownList ddlSubject = ExamGridView.Rows[e.RowIndex].FindControl("ddlSubject") as DropDownList;
-            DropDownList ddlBatch = ExamGridView.Rows[e.RowIndex].FindControl("ddlBatch") as DropDownList;
-            UpdateExam(ExamID, txtDescription.Text, int.Parse(ddlSubject.SelectedValue), int.Parse(ddlBatch.SelectedValue));
+            TextBox txtDate = ExamGridView.Rows[e.RowIndex].FindControl("txtDate") as TextBox;
+            TextBox txtTime = ExamGridView.Rows[e.RowIndex].FindControl("txtTime") as TextBox;
+            UpdateExam(ExamID, txtDescription.Text, int.Parse(ddlSubject.SelectedValue), Convert.ToDateTime(txtDate.Text), Convert.ToDateTime(txtTime.Text));
             ExamGridView.EditIndex = -1;
             LoadData();
         }
 
-        protected void UpdateExam(int ExamID, string Description, int SubjectID, int BatchID)
+        protected void UpdateExam(int ExamID, string Description, int SubjectID, DateTime Date, DateTime Time)
         {
             SqlConnection con = new SqlConnection(connectionString);
             com = new SqlCommand();
@@ -118,15 +100,15 @@ namespace assignment.aspx
             com.Parameters.Add(new SqlParameter("@ExamID", SqlDbType.Int));
             com.Parameters.Add(new SqlParameter("@Description", SqlDbType.VarChar, 100));
             com.Parameters.Add(new SqlParameter("@SubjectID", SqlDbType.Int));
-            com.Parameters.Add(new SqlParameter("@BatchID", SqlDbType.Int));
+            com.Parameters.Add(new SqlParameter("@Date", SqlDbType.DateTime));
+            com.Parameters.Add(new SqlParameter("@Time", SqlDbType.DateTime));
             com.Parameters["@action"].Value = "Update";
             com.Parameters["@ExamID"].Value = ExamID;
             com.Parameters["@Description"].Value = Description;
             com.Parameters["@SubjectID"].Value = SubjectID;
-            com.Parameters["@BatchID"].Value = BatchID;
-            sqlda = new SqlDataAdapter(com);
-            ds = new DataSet();
-            sqlda.Fill(ds);
+            com.Parameters["@Date"].Value = Date;
+            com.Parameters["@Time"].Value = Time;
+            com.ExecuteNonQuery();
             con.Close();
         }
 

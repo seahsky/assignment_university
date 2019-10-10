@@ -9,7 +9,7 @@
         AutoGenerateColumns="False"
         DataKeyYears="BatchID"
         OnRowDataBound="BatchGridView_RowDataBound"
-        OnRowEditing="BatchGridView_RowEditing1"
+        OnRowEditing="BatchGridView_RowEditing"
         OnRowUpdating="BatchGridView_RowUpdating"
         OnRowDeleting="BatchGridView_RowDeleting"
         OnRowCancelingEdit="BatchGridView_RowCancelingEdit"

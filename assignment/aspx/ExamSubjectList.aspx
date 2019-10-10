@@ -11,6 +11,9 @@
                 AutoGenerateColumns="False"
                 DataKeyNames="SubjectID"
                 OnRowCommand="ExamSubjectGridView_RowCommand"
+                OnRowCancelingEdit="ExamSubjectGridView_RowCancelingEdit"
+                OnRowEditing="ExamSubjectGridView_RowEditing"
+                OnRowUpdating="ExamSubjectGridView_RowUpdating"
                 OnRowDataBound="ExamSubjectGridView_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="ClassSubjectID" HeaderText="ClassSubjectID" InsertVisible="False" ReadOnly="True" SortExpression="ClassSubjectID" Visible="true" />
@@ -24,6 +27,24 @@
                         <ItemTemplate>
                             <asp:Label ID="lblSubjectDescription" runat="server" Text='<%#Eval("SubjectDescription") %>'></asp:Label>
                         </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Exam Date and Time">
+                        <ItemTemplate>
+                            <asp:Label ID="lblExam" runat="server" Text='<%#Eval("DateTime", "{0:f}") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlDateTime" runat="server" CssClass="form-control"></asp:DropDownList>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Actions">
+                        <ItemTemplate>
+                            <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
+                            <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Button CommandName="Update" runat="server" CssClass="btn btn-secondary" Text="Update" />
+                            <asp:Button CommandName="Cancel" runat="server" CssClass="btn btn-warning" Text="Cancel" CausesValidation="false" />
+                        </EditItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>

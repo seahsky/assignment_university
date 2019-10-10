@@ -22,24 +22,51 @@
         </div>
     </div>
 
-    <div class="row">
-        <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control col-8 mt-4" placeholder="Exam Description"></asp:TextBox>
-    </div>
-    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Exam Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
-    <div class="row">
-        <asp:Label ID="lblSubject" runat="server" Text="Subject in Charge" CssClass="mt-4"></asp:Label>
-    </div>
-    <div class="row">
-        <asp:DropDownList ID="ddlSubject" runat="server" CssClass="form-control col-5"></asp:DropDownList>
-    </div>
-    <div class="row">
-        <asp:Label ID="lblBatch" runat="server" Text="Batch" CssClass="mt-4"></asp:Label>
-    </div>
-    <div class="row">
-        <asp:DropDownList ID="ddlBatch" runat="server" CssClass="form-control col-5"></asp:DropDownList>
+    <div class="row mt-4">
+        <div class="col-8">
+            <asp:Label ID="lblDescription" runat="server" Text="Description"></asp:Label>
+            <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" placeholder="Exam Description"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Exam Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
+        </div>
     </div>
     <div class="row mt-4">
-        <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
-        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+        <div class="col-8">
+            <asp:Label ID="lblSubject" runat="server" Text="Subject"></asp:Label>
+            <asp:DropDownList ID="ddlSubject" runat="server" CssClass="form-control"></asp:DropDownList>
+        </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-5">
+            <asp:Label ID="lblDate" runat="server" Text="Exam Date"></asp:Label>
+            <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" placeholder="Exam Date"></asp:TextBox>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-2">
+            <asp:Label ID="lblTime" runat="server" Text="Exam Time"></asp:Label>
+            <asp:TextBox ID="txtTime" runat="server" CssClass="form-control" placeholder="Ëxam Time"></asp:TextBox>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-4">
+            <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
+            <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $("#<%= txtDate.ClientID %>").datepicker();
+            $("#<%= txtTime.ClientID %>").timepicker({
+                timeFormat: 'h:mm p',
+                interval: 60,
+                minTime: '10',
+                maxTime: '6:00pm',
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+        });
+    </script>
 </asp:Content>
