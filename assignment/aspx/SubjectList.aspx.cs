@@ -44,7 +44,30 @@ namespace assignment.aspx
 
         protected void SubjectGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataRowView drvSubject = e.Row.DataItem as DataRowView;
 
+                DropDownList ddlLecturer = e.Row.FindControl("ddlLecturer") as DropDownList;
+                if (ddlLecturer != null)
+                {
+                    SqlConnection con = new SqlConnection(connectionString);
+                    com = new SqlCommand();
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = "DDLLecturer";
+                    com.CommandType = CommandType.StoredProcedure;
+                    sqlda = new SqlDataAdapter(com);
+                    ds = new DataSet();
+                    sqlda.Fill(ds);
+                    ddlLecturer.DataSource = ds;
+                    ddlLecturer.DataTextField = "Name";
+                    ddlLecturer.DataValueField = "LecturerID";
+                    ddlLecturer.DataBind();
+                    con.Close();
+                    ddlLecturer.SelectedValue = drvSubject["LecturerID"].ToString();
+                }
+            }
         }
 
         protected void SubjectGridView_RowEditing(object sender, GridViewEditEventArgs e)
@@ -58,7 +81,9 @@ namespace assignment.aspx
             int SubjectID = int.Parse(SubjectGridView.Rows[e.RowIndex].Cells[0].Text);
             TextBox txtName = SubjectGridView.Rows[e.RowIndex].FindControl("txtName") as TextBox;
             TextBox txtDescription = SubjectGridView.Rows[e.RowIndex].FindControl("txtDescription") as TextBox;
+            DropDownList ddlLecturer = SubjectGridView.Rows[e.RowIndex].FindControl("ddlLecturer") as DropDownList;
             UpdateSubject(SubjectID, txtName.Text, txtDescription.Text);
+            InsertOrUpdateLecturerSubject(int.Parse(ddlLecturer.SelectedValue), SubjectID);
             SubjectGridView.EditIndex = -1;
             LoadData();
         }
@@ -69,7 +94,7 @@ namespace assignment.aspx
             com = new SqlCommand();
             con.Open();
             com.Connection = con;
-            com.CommandText = "StudentCRUD";
+            com.CommandText = "SubjectCRUD";
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.Add(new SqlParameter("@action", SqlDbType.VarChar, 50));
             com.Parameters.Add(new SqlParameter("@SubjectID", SqlDbType.Int));
@@ -79,9 +104,23 @@ namespace assignment.aspx
             com.Parameters["@SubjectID"].Value = SubjectID;
             com.Parameters["@Name"].Value = Name;
             com.Parameters["@Description"].Value = Description;
-            sqlda = new SqlDataAdapter(com);
-            ds = new DataSet();
-            sqlda.Fill(ds);
+            com.ExecuteNonQuery();
+            con.Close();
+        }
+
+        protected void InsertOrUpdateLecturerSubject(int LecturerID, int SubjectID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            com = new SqlCommand();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "InsertOrUpdateLecturerSubject";
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.Add(new SqlParameter("@SubjectID", SqlDbType.Int));
+            com.Parameters.Add(new SqlParameter("@LecturerID", SqlDbType.Int));
+            com.Parameters["@SubjectID"].Value = SubjectID;
+            com.Parameters["@LecturerID"].Value = LecturerID;
+            com.ExecuteNonQuery();
             con.Close();
         }
 

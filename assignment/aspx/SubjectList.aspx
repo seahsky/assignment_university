@@ -18,21 +18,27 @@
             <asp:BoundField DataField="SubjectID" HeaderText="SubjectID" InsertVisible="False" ReadOnly="True" SortExpression="SubjectID" />
             <asp:TemplateField HeaderText="Name">
                 <ItemTemplate>
-                    <asp:Label ID="lblName" runat="server" Text='<%#Eval("Name") %>'></asp:Label>
+                    <asp:Label ID="lblName" runat="server" Text='<%#Eval("SubjectName") %>'></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%#Eval("Name") %>'></asp:TextBox>
+                    <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%#Eval("SubjectName") %>'></asp:TextBox>
                     <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Subject Name is Required." ControlToValidate="txtName"></asp:RequiredFieldValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Description">
                 <ItemTemplate>
-                    <asp:Label ID="lblDescription" runat="server" Text='<%#Eval("Description") %>'></asp:Label>
+                    <asp:Label ID="lblDescription" runat="server" Text='<%#Eval("SubjectDescription") %>'></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" Text='<%#Eval("Description") %>'></asp:TextBox>
-                    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Subject Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Invalid Description." ControlToValidate="txtDescription" ValidationExpression="^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"></asp:RegularExpressionValidator>
+                    <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" Text='<%#Eval("SubjectDescription") %>'></asp:TextBox>
+                </EditItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Lecturer In Charge">
+                <ItemTemplate>
+                    <asp:Label ID="lblLecturerInCharge" runat="server" Text='<%#Eval("LecturerInCharge") %>'></asp:Label>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control"></asp:DropDownList>
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">

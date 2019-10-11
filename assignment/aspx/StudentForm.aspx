@@ -147,13 +147,10 @@
                     DataKeyNames="ResultID">
                     <Columns>
                         <asp:BoundField DataField="ResultID" HeaderText="ResultID" InsertVisible="False" ReadOnly="True" SortExpression="ResultID" Visible="false" />
-                        <asp:TemplateField HeaderText="Batch">
+                        <asp:TemplateField HeaderText="Exam Date">
                             <ItemTemplate>
-                                <asp:Label ID="lblBatch" runat="server" Text='<%#Eval("Batch") %>'></asp:Label>
+                                <asp:Label ID="lblDate" runat="server" Text='<%#Convert.ToDateTime(Eval("Date")).ToString("MM/dd/yyyy") %>'></asp:Label>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtBatch" runat="server" CssClass="form-control" Text='<%#Eval("Batch") %>'></asp:TextBox>
-                            </EditItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Subject">
                             <ItemTemplate>

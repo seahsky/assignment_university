@@ -51,6 +51,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Actions">
                 <ItemTemplate>
+                    <asp:Button ID="btnResult" runat="server" CssClass="btn btn-info" Text="Enter Results" PostBackUrl='<%# "~/aspx/ExamResultList.aspx?ExamID=" + Eval("ExamID") %>' />
                     <asp:Button CommandName="Edit" runat="server" CssClass="btn btn-primary" Text="Edit" />
                     <asp:Button CommandName="Delete" runat="server" CssClass="btn btn-danger" Text="Delete" />
                 </ItemTemplate>
