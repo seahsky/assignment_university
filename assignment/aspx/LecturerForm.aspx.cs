@@ -78,7 +78,7 @@ namespace assignment.aspx
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AddLecturer(txtName.Text, txtEmail.Text, txtContactNo.Text, int.Parse(ddlStatus.SelectedValue));
-            Response.Redirect("LecturerForm.aspx?add=success");
+            Response.Redirect("LecturerList.aspx");
         }
     }
 }

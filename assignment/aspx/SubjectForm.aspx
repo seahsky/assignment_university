@@ -22,14 +22,26 @@
         </div>
     </div>
 
-    <div class="row">
-        <asp:TextBox ID="txtName" runat="server" CssClass="form-control col-6 mt-4" placeholder="Subject Name"></asp:TextBox>
+    <div class="row mt-4">
+        <div class="col-6">
+            <asp:Label ID="lblName" runat="server" Text="Subject Name"></asp:Label>
+            <asp:TextBox ID="txtName" runat="server" CssClass="form-control" placeholder="Subject Name"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Subject Name is Required." ControlToValidate="txtName"></asp:RequiredFieldValidator>
+        </div>
     </div>
-    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" ErrorMessage="Subject Name is Required." ControlToValidate="txtName"></asp:RequiredFieldValidator>
-    <div class="row">
-        <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control col-8 mt-4" placeholder="Subject Description"></asp:TextBox>
+    <div class="row mt-4">
+        <div class="col-8">
+            <asp:Label ID="lblDescription" runat="server" Text="Subject Description"></asp:Label>
+            <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" placeholder="Subject Description"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Subject Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
+        </div>
     </div>
-    <asp:RequiredFieldValidator runat="server" CssClass="invalid-feedback" Display="Dynamic" Text="Subject Description is Required." ControlToValidate="txtDescription"></asp:RequiredFieldValidator>
+    <div class="row mt-4">
+        <div class="col-4">
+            <asp:Label ID="lblLecturer" runat="server" Text="Lecturer In Charge"></asp:Label>
+            <asp:DropDownList ID="ddlLecturer" runat="server" CssClass="form-control"></asp:DropDownList>
+        </div>
+    </div>
     <div class="row mt-4">
         <asp:Button ID="btnReset" runat="server" CssClass="btn btn-warning mr-2" Text="Reset" OnClick="btnReset_Click" CausesValidation="false" />
         <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Add" OnClick="btnSubmit_Click" />

@@ -137,7 +137,7 @@ namespace assignment.aspx
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AddStudent(txtName.Text, txtEmail.Text, txtContactNo.Text, int.Parse(ddlBatch.SelectedValue), int.Parse(ddlStatus.SelectedValue), int.Parse(ddlClass.SelectedValue));
-            Response.Redirect("StudentForm.aspx?action=add");
+            Response.Redirect("StudentList.aspx");
         }
 
         protected void btnReset_Click(object sender, EventArgs e)

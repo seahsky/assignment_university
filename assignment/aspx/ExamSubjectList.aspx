@@ -30,7 +30,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Exam Date and Time">
                         <ItemTemplate>
-                            <asp:Label ID="lblExam" runat="server" Text='<%#Convert.ToDateTime(Eval("DateTime")).ToString("MM/dd/yyyy  HH:mm") %>'></asp:Label>
+                            <asp:Label ID="lblExam" runat="server" Text='<%#Eval("DateTime").ToString().Substring(0, 20) %>'></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:DropDownList ID="ddlDateTime" runat="server" CssClass="form-control"></asp:DropDownList>

@@ -53,7 +53,7 @@ namespace assignment.aspx
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AddBatch(int.Parse(txtYear.Text));
-            Response.Redirect("BatchForm.aspx?add=success");
+            Response.Redirect("BatchList.aspx");
         }
     }
 }

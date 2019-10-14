@@ -79,7 +79,7 @@ namespace assignment.aspx
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AddExam(txtDescription.Text, int.Parse(ddlSubject.SelectedValue), Convert.ToDateTime(txtDate.Text), Convert.ToDateTime(txtTime.Text));
-            Response.Redirect("ExamForm.aspx?add=success");
+            Response.Redirect("ExamList.aspx");
         }
     }
 }
